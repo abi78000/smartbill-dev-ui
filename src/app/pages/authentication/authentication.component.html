@@ -6,7 +6,6 @@
 <div class="row justify-content-center">
   <!-- User Selection -->
   <div class="col-md-6 mb-4">
-
     <div class="form-floating">
       <select
         class="form-select"
@@ -25,25 +24,23 @@
   <!-- Modules Card -->
   <div class="col-md-8">
     <div class="card shadow-sm border-0 mb-3">
-
-<div class="card-header bg-primary text-white">
-  <span class="fw-semibold">Available Modules</span>
-  <div class="header-buttons">
-    <button
-      class="btn btn-outline-light btn-sm"
-      (click)="clearAllSelections()"
-    >
-      Clear
-    </button>
-    <button
-      class="btn btn-light btn-sm"
-      (click)="saveAllSelectedModules()"
-    >
-      <i class="bi bi-save me-1"></i> Save
-    </button>
-  </div>
-</div>
-
+      <div class="card-header bg-primary text-white">
+        <span class="fw-semibold">Available Modules</span>
+        <div class="header-buttons">
+          <button
+            class="btn btn-outline-light btn-sm"
+            (click)="clearAllSelections()"
+          >
+            Clear
+          </button>
+          <button
+            class="btn btn-light btn-sm"
+            (click)="saveAllSelectedModules()"
+          >
+            <i class="bi bi-save me-1"></i> Save
+          </button>
+        </div>
+      </div>
 
       <!-- Card Body with Module List -->
       <div class="card-body p-0">
