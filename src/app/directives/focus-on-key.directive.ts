@@ -40,9 +40,6 @@ export class FocusOnKeyDirective implements AfterViewInit {
     }
   }
 
-  // --------------------------
-  // ENTER KEY
-  // --------------------------
   private handleEnterKey(current: HTMLElement) {
     let target: HTMLElement | null = null;
 
@@ -98,9 +95,6 @@ export class FocusOnKeyDirective implements AfterViewInit {
     );
   }
 
-  // --------------------------
-  // NEXT FOCUSABLE
-  // --------------------------
   private getNextFocusable(current: HTMLElement): HTMLElement | null {
     const list = this.getFocusableElements();
     const index = list.indexOf(current);

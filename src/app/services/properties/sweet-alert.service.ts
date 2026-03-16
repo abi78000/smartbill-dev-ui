@@ -6,9 +6,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 })
 export class SweetAlertService {
 
-  // -----------------------------
-  // Toast notification (non-blocking)
-  // -----------------------------
+
   toast(message: string, icon: SweetAlertIcon = 'info', timer: number = 2000, afterClose?: () => void) {
     Swal.fire({
       toast: true,
@@ -23,9 +21,7 @@ export class SweetAlertService {
     });
   }
 
-  // -----------------------------
-  // Common message types
-  // -----------------------------
+
   success(title: string, message: string, afterClose?: () => void) {
     Swal.fire({
       icon: 'success',

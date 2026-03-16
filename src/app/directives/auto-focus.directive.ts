@@ -1,7 +1,14 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 
 @Directive({
-  selector: '[appAutoFocus]'
+  selector: '[appAutoFocus]',
 })
 export class AutoFocusDirective implements AfterViewInit, OnChanges {
   @Input() delay = 0;
@@ -25,7 +32,10 @@ export class AutoFocusDirective implements AfterViewInit, OnChanges {
     setTimeout(() => {
       const element = this.el.nativeElement as HTMLElement;
       if (!element) return;
-      if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+      if (
+        element instanceof HTMLInputElement ||
+        element instanceof HTMLTextAreaElement
+      ) {
         element.focus();
         element.select();
       } else {
@@ -34,4 +44,3 @@ export class AutoFocusDirective implements AfterViewInit, OnChanges {
     }, this.delay);
   }
 }
-  

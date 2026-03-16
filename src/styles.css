@@ -295,11 +295,6 @@ button:disabled {
   background-color: #eef2ff;
 }
 
-/* ==============================
-   LUCIDE ICON — THEME-BASED STYLING
-============================== */
-
-/* Base icon look */
 lucide-icon {
   width: 18px;
   height: 18px;
@@ -1675,6 +1670,10 @@ button .lucide {
 .master-btn-outline:hover {
   background: #e9ecf8;
 }
+
+
+
+
 
 /* ==============================
    FORM

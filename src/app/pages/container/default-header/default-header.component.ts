@@ -57,7 +57,7 @@ export class DefaultHeaderComponent implements OnInit {
     const userId = Number(localStorage.getItem('userId'));
     const role = localStorage.getItem('role');
 
-    if (!userId && role !== 'admin') return;
+    if (!userId && role !== 'ADMIN') return;
 
     forkJoin({
       permissions: this.commonService.getPermissionsByUser(userId),
@@ -77,7 +77,7 @@ export class DefaultHeaderComponent implements OnInit {
             children: buildTree(all, m.moduleID),
           }));
 
-      if (role === 'admin') {
+      if (role === 'ADMIN') {
         this.navItems = buildTree(modules);
       } else {
         const allowedIds = permissions.map((p: any) => p.moduleID);

@@ -28,7 +28,7 @@
           [class.active]="activeTab === 'register'"
           (click)="switchTab('register')"
         >
-          Register
+          Sign Up
         </button>
       </div>
 
@@ -37,8 +37,16 @@
         *ngIf="activeTab === 'login'"
         [formGroup]="loginForm"
         (ngSubmit)="login()"
-        autocomplete="on"
+        autocomplete="off"
       >
+        <!-- Hidden fields to block browser autofill -->
+        <input type="text" style="display: none" autocomplete="username" />
+        <input
+          type="password"
+          style="display: none"
+          autocomplete="new-password"
+        />
+
         <h2 class="login-title">Welcome Back</h2>
         <p class="login-subtitle">Please sign in to your account</p>
 
@@ -47,19 +55,43 @@
           <input
             type="text"
             formControlName="userName"
+            name="userName"
             placeholder="Enter username"
-            autocomplete="username"
+            autocomplete="new-username"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            appInputRestrict="uppercase"
           />
         </div>
 
         <div class="form-group">
           <label>Password</label>
-          <input
-            type="password"
-            formControlName="password"
-            placeholder="Enter password"
-            autocomplete="current-password"
-          />
+
+          <div class="password-wrapper">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              name="password"
+              placeholder="Enter password"
+              autocomplete="new-password"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              appInputRestrict="password"
+            />
+
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="togglePassword()"
+            >
+              <lucide-icon
+                [name]="showPassword ? 'eye-off' : 'eye'"
+                size="20"
+              ></lucide-icon>
+            </button>
+          </div>
         </div>
 
         <button class="login-btn" [disabled]="loginForm.invalid">
@@ -101,6 +133,7 @@
         [formGroup]="registerForm"
         (ngSubmit)="register()"
         autocomplete="on"
+
       >
         <h2 class="login-title">Create Account</h2>
         <p class="login-subtitle">Register company & admin user</p>
@@ -111,6 +144,7 @@
             type="text"
             formControlName="companyName"
             autocomplete="organization"
+            appInputRestrict="uppercase"
           />
         </div>
 
@@ -120,6 +154,7 @@
             type="text"
             formControlName="userName"
             autocomplete="username"
+            appInputRestrict="uppercase"
           />
         </div>
 
@@ -129,7 +164,10 @@
             type="password"
             formControlName="passwordHash"
             autocomplete="new-password"
+            appInputRestrict="password"
+            
           />
+          
         </div>
 
         <button class="login-btn" [disabled]="registerForm.invalid">

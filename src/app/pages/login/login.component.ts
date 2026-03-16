@@ -9,10 +9,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { CommonserviceService } from '../../services/commonservice.service';
 import { User } from '../models/common-models/user';
+import { InputRestrictDirective } from '../../directives/input-restrict.directive';
+import { IconsModule } from '../../shared/icons.module';
 
-/* ===============================
-   API RESPONSE MODEL
-================================ */
 interface RegisterResponse {
   success: boolean;
   companyID: number;
@@ -21,31 +20,20 @@ interface RegisterResponse {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, InputRestrictDirective,IconsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  /* ===============================
-     TAB STATE
-  ================================ */
+
   activeTab: 'login' | 'register' = 'login';
 
-  /* ===============================
-     FORMS
-  ================================ */
   loginForm!: FormGroup;
   registerForm!: FormGroup;
 
-  /* ===============================
-     USERS
-  ================================ */
   apiUsers: User[] = [];
   isAdmin = false;
 
-  /* ===============================
-     UI STATE
-  ================================ */
   errorMessage = '';
   loading = false;
 
@@ -55,17 +43,18 @@ export class LoginComponent implements OnInit {
     private commonService: CommonserviceService
   ) {}
 
-  /* ===============================
-     INIT
-  ================================ */
+
   ngOnInit(): void {
     this.initForms();
     this.loadApiUsers();
   }
 
-  /* ===============================
-     FORM INIT
-  ================================ */
+
+  showPassword = false;
+
+togglePassword() {
+  this.showPassword = !this.showPassword;
+}
   private initForms(): void {
     this.loginForm = this.fb.group({
       userName: ['', Validators.required],
@@ -79,17 +68,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  /* ===============================
-     TAB SWITCH
-  ================================ */
+
   switchTab(tab: 'login' | 'register'): void {
     this.activeTab = tab;
     this.errorMessage = '';
   }
 
-  /* ===============================
-     LOGIN
-  ================================ */
+
   login(): void {
     if (this.loginForm.invalid) {
       this.errorMessage = 'Please enter username and password';
@@ -98,17 +83,15 @@ export class LoginComponent implements OnInit {
 
     const { userName, password } = this.loginForm.value;
 
-    /* ========= ADMIN LOGIN ========= */
-    if (userName === 'admin' && password === '123') {
+    if (userName === 'ADMIN' && password === '123') {
       localStorage.setItem('userId', '0');
-      localStorage.setItem('userName', 'admin');
-      localStorage.setItem('role', 'admin');
+      localStorage.setItem('userName', 'ADMIN');
+      localStorage.setItem('role', 'ADMIN');
 
       this.router.navigate(['/default/master/dashboard']);
       return;
     }
 
-    /* ========= API USER LOGIN ========= */
     const apiUser = this.apiUsers.find(
       (u) =>
         u.userName === userName &&
@@ -126,7 +109,6 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    /* ========= LOCAL STORAGE LOGIN (DEMO) ========= */
     const localUsers: any[] = JSON.parse(
       localStorage.getItem('users') || '[]'
     );
@@ -145,13 +127,9 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    /* ========= FAIL ========= */
     this.errorMessage = 'Invalid username or password';
   }
 
-  /* ===============================
-     LOAD API USERS
-  ================================ */
   private loadApiUsers(): void {
     this.commonService.getUsers().subscribe({
       next: (res: User[]) => {
@@ -163,9 +141,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  /* ===============================
-     REGISTER
-  ================================ */
+
   register(): void {
     if (this.registerForm.invalid) {
       this.errorMessage = 'Company name, username and password are required';
@@ -195,7 +171,6 @@ export class LoginComponent implements OnInit {
           return;
         }
 
-        /* ===== SAVE USER LOCALLY (DEMO) ===== */
         const localUsers: any[] = JSON.parse(
           localStorage.getItem('users') || '[]'
         );

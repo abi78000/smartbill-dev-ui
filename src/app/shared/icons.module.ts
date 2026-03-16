@@ -62,14 +62,15 @@ import {
   AlertCircle,
   AlertTriangle,
   Menu,
-Edit,
+  Edit,
+  EyeOff,
   // ===== DASHBOARD / CHARTS =====
   Calendar,
   PieChart,
   TrendingUp,
   ArrowRightLeft,
   RefreshCw,
-GitBranch,
+  GitBranch,
   UploadCloud,
   // ===== MEASUREMENT =====
   Ruler,
@@ -77,6 +78,7 @@ GitBranch,
   UserCheck,
   Folder,
   PlusCircle,
+  Eye,
 } from 'lucide-angular';
 import { File } from 'lucide-angular';
 
@@ -107,13 +109,15 @@ import { File } from 'lucide-angular';
       Briefcase,
       ArrowLeft,
       // INVENTORY
+      EyeOff,
       Package,
       Box,
       Tag,
       Truck,
       Edit,
       ShoppingCart,
-GitBranch,
+      GitBranch,
+      Eye,
       // LAYOUT
       Grid,
       LayoutGrid,
@@ -158,7 +162,7 @@ GitBranch,
       Folder,
       UploadCloud,
       PlusCircle,
-      Home
+      Home,
     }),
   ],
   exports: [LucideAngularModule],

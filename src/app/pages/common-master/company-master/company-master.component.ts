@@ -38,44 +38,42 @@ export class CompanyMasterComponent {
   isFormEnabled = false;
   constructor(
     private commonservice: CommonserviceService,
-    private swallservice: SweetAlertService
+    private swallservice: SweetAlertService,
   ) {}
   ngOnInit(): void {
     this.resetForm();
     this.loadCompanies();
-    this.isFormEnabled = false; 
+    this.isFormEnabled = false;
   }
-newCompany() {
-  this.resetForm();
-  this.isEditMode = false;
-  this.isFormEnabled = true;  
+  newCompany() {
+    this.resetForm();
+    this.isEditMode = false;
+    this.isFormEnabled = true;
+  }
 
-}
-
-
-Refresh(){
-  this.resetForm();
-  this.isEditMode = false;
-  this.isFormEnabled = false;
-}
+  Refresh() {
+    this.resetForm();
+    this.isEditMode = false;
+    this.isFormEnabled = false;
+  }
 
   async saveOrDeleteCompany() {
     if (!this.company.companyName) {
       this.swallservice.warning(
         'Validation Error',
-        'Company Name is required!'
+        'Company Name is required!',
       );
       return;
     }
 
     if (this.selectedLogoFile) {
       this.company.companyLogo = await this.fileToByteArray(
-        this.selectedLogoFile
+        this.selectedLogoFile,
       );
     }
     if (this.selectedImageFile) {
       this.company.companyImage = await this.fileToByteArray(
-        this.selectedImageFile
+        this.selectedImageFile,
       );
     }
 
@@ -84,7 +82,9 @@ Refresh(){
         if (response) {
           this.swallservice.success(
             'Success',
-            this.company.companyID > 0 ? 'Company updated!' : 'Company created!'
+            this.company.companyID > 0
+              ? 'Company updated!'
+              : 'Company created!',
           );
           this.loadCompanies();
           this.resetForm();
@@ -102,12 +102,11 @@ Refresh(){
   }
 
   get totalCompanies(): number {
-  return this.companies.length;
-}
-
+    return this.companies.length;
+  }
 
   editCompany(c: Company) {
-    this.company = { ...c }; // populate form for editing
+    this.company = { ...c }; 
     this.isEditMode = true;
     this.isFormEnabled = false;
   }
@@ -181,7 +180,7 @@ Refresh(){
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        const base64 = e.target.result.split(',')[1]; // remove data:image/...;base64,
+        const base64 = e.target.result.split(',')[1]; 
         const byteArray = Array.from(atob(base64), (c) => c.charCodeAt(0));
         resolve(byteArray);
       };
