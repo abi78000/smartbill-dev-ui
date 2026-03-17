@@ -12,13 +12,6 @@ export interface RegisterResponse {
   companyID: number;
 }
 
-
-
-
-
-
-
-
 export interface CompanyDashboardDto {
   totalSalesAmount: number;
   customerOutstandingAmount: number;
@@ -36,14 +29,6 @@ export interface CompanyDashboardResponseDto {
   dashboard: CompanyDashboardDto;
   activeBranchCount: number;
 }
-
-
-
-
-
-
-
-
 
 export interface Company {
   companyID: number;

@@ -27,6 +27,15 @@ export class MasterService {
   getPaymentModes(): Observable<PaymentMode[]> {
     return this.http.get<PaymentMode[]>(`${this.baseUrl}/PaymentMode`);
   }
+
+  // ================= Payment Mode =================
+  // Save (Insert / Update / Delete)
+  savePaymentMode(paymentMode: PaymentMode): Observable<number> {
+    return this.http.post<number>(`${this.baseUrl}/PaymentMode`, paymentMode);
+  }
+
+
+
   // ================= Category =================
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.baseUrl}/Categories`);

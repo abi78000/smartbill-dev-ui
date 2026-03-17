@@ -31,6 +31,7 @@ import { GrnMasterComponent } from './purchase-order/grn-master/grn-master.compo
 import { ReportsComponent } from './pages/reports/reports.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { DefaultDashboardComponent } from './pages/container/default-dashboard/default-dashboard.component';
+import { PaymentModeMasterComponent } from './pages/common-master/payment-mode-master/payment-mode-master.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -47,7 +48,7 @@ export const routes: Routes = [
       { path: 'master/department', component: DepartmentMasterComponent },
       { path: 'master/role', component: RoleMasterComponent },
       { path: 'master/user', component: UsermasterComponent },
-
+      { path: 'master/paymentmode', component: PaymentModeMasterComponent },
       { path: '', redirectTo: 'master/company', pathMatch: 'full' },
     ],
   },

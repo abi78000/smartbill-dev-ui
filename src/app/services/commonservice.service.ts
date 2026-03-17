@@ -16,6 +16,7 @@ import {
   Module,
 } from '../pages/models/common-models/user';
 import { environment } from '../config';
+import { PaymentMode } from '../pages/models/common-models/master-models/master';
 @Injectable({
   providedIn: 'root',
 })
@@ -33,9 +34,8 @@ export class CommonserviceService {
   getCompanyDashboard(
     companyId: number,
     fromDate: string,
-    toDate: string
+    toDate: string,
   ): Observable<CompanyDashboardResponseDto> {
-
     const params = new HttpParams()
       .set('companyId', companyId)
       .set('fromDate', fromDate)
@@ -43,7 +43,7 @@ export class CommonserviceService {
 
     return this.http.get<CompanyDashboardResponseDto>(
       `${this.baseUrl}/CommonDashboard`,
-      { params }
+      { params },
     );
   }
   register(data: RegisterRequest): Observable<RegisterResponse> {
@@ -52,7 +52,7 @@ export class CommonserviceService {
 
   getCompanyById(companyID: number) {
     return this.http.get<Company>(
-      `${this.baseUrl}/GetCompanylistByID?id=${companyID}`
+      `${this.baseUrl}/GetCompanylistByID?id=${companyID}`,
     );
   }
 
@@ -66,7 +66,7 @@ export class CommonserviceService {
 
   getBranchesByCompany(companyId: number): Observable<Branch[]> {
     return this.http.get<Branch[]>(
-      `${this.baseUrl}/GetBranchesByCompany?companyId=${companyId}`
+      `${this.baseUrl}/GetBranchesByCompany?companyId=${companyId}`,
     );
   }
 
@@ -74,13 +74,17 @@ export class CommonserviceService {
   saveDepartment(department: Department): Observable<number> {
     return this.http.post<number>(
       `${this.baseUrl}/PostDepartmentMaster`,
-      department
+      department,
     );
   }
 
   getDepartments(): Observable<Department[]> {
     return this.http.get<Department[]>(`${this.baseUrl}/GetDepartmentList`);
   }
+
+
+
+
   // Role
   saveRole(role: Role): Observable<number> {
     return this.http.post<number>(`${this.baseUrl}/PostRoleMaster`, role);
@@ -93,13 +97,11 @@ export class CommonserviceService {
   saveUser(user: User): Observable<number> {
     return this.http.post<number>(`${this.baseUrl}/PostUserMaster`, user);
   }
-
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/GetUserList`);
   }
 
   // === User Permission APIs ===
-
   savePermission(permission: UserPermission): Observable<number> {
     return this.http.post<number>(`${this.baseUrl}/SavePermission`, permission);
   }
@@ -110,13 +112,13 @@ export class CommonserviceService {
 
   getPermissionsByRole(roleId: number): Observable<UserPermission[]> {
     return this.http.get<UserPermission[]>(
-      `${this.baseUrl}/GetPermissionsByRole/${roleId}`
+      `${this.baseUrl}/GetPermissionsByRole/${roleId}`,
     );
   }
 
   getPermissionsByUser(userId: number): Observable<UserPermission[]> {
     return this.http.get<UserPermission[]>(
-      `${this.baseUrl}/GetPermissionsByUser/${userId}`
+      `${this.baseUrl}/GetPermissionsByUser/${userId}`,
     );
   }
   getAllModules(): Observable<Module[]> {
