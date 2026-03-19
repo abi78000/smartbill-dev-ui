@@ -1,11 +1,26 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../config';
-import { HttpClient } from '@angular/common/http';  
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Brand, Category, Customer, Cess,Product, Supplier, Tax, Unit, HSN, Service, SubCategory,Status,PaymentMode} from './../pages/models/common-models/master-models/master';
+import {
+  Brand,
+  Category,
+  Customer,
+  Cess,
+  Product,
+  Supplier,
+  Tax,
+  Unit,
+  HSN,
+  Service,
+  SubCategory,
+  Status,
+  PaymentMode,
+  PriceListMaster,
+} from './../pages/models/common-models/master-models/master';
 import forkJoin from 'rxjs/operators';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MasterService {
   getCompanyById(companyId: any) {
@@ -13,7 +28,7 @@ export class MasterService {
   }
   private baseUrl = `${environment.apiBaseUrl}/Master`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // ================= Brand =================
   getBrands(): Observable<Brand[]> {
@@ -34,7 +49,21 @@ export class MasterService {
     return this.http.post<number>(`${this.baseUrl}/PaymentMode`, paymentMode);
   }
 
+  // ================= PRICE LIST =================
 
+savePriceList(data: PriceListMaster) {
+  return this.http.post<any>(
+    `${this.baseUrl}/SavePriceList`,
+    data
+  );
+}
+
+addPriceListItems(priceListId: number, items: any[]) {
+  return this.http.post<any>(
+    `${this.baseUrl}/AddPriceListItems?priceListId=${priceListId}`,
+    items
+  );
+}
 
   // ================= Category =================
   getCategories(): Observable<Category[]> {
@@ -44,12 +73,12 @@ export class MasterService {
   saveCategory(category: Category): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/Category`, category);
   }
-// ================= Status =================
-getStatuses(): Observable<Status[]> {
-  return this.http.get<Status[]>(`${this.baseUrl}/Status`);
-}
+  // ================= Status =================
+  getStatuses(): Observable<Status[]> {
+    return this.http.get<Status[]>(`${this.baseUrl}/Status`);
+  }
 
-   // GET all active Cess
+  // GET all active Cess
   getCesses(): Observable<Cess[]> {
     return this.http.get<Cess[]>(`${this.baseUrl}/Cesses`);
   }
@@ -79,7 +108,6 @@ getStatuses(): Observable<Status[]> {
   saveProduct(product: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/Product`, product);
   }
-
 
   // ================= Supplier =================
   getSuppliers(): Observable<Supplier[]> {
@@ -138,7 +166,7 @@ getStatuses(): Observable<Status[]> {
     return this.http.post<any>(`${this.baseUrl}/SubCategory`, subCategory);
   }
 
-   /** Get current user info */
+  /** Get current user info */
   getCurrentUserId(): number {
     const userId = localStorage.getItem('userId');
     return userId ? Number(userId) : 0;
@@ -151,5 +179,4 @@ getStatuses(): Observable<Status[]> {
   isAdmin(): boolean {
     return this.getCurrentUserRole().toLowerCase() === 'admin';
   }
-
 }

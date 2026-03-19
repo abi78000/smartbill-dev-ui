@@ -79,6 +79,7 @@ import {
   Folder,
   PlusCircle,
   Eye,
+  List,
 } from 'lucide-angular';
 import { File } from 'lucide-angular';
 
@@ -163,6 +164,7 @@ import { File } from 'lucide-angular';
       UploadCloud,
       PlusCircle,
       Home,
+      List
     }),
   ],
   exports: [LucideAngularModule],

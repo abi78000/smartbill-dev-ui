@@ -139,4 +139,21 @@ export class CommonserviceService {
   isAdmin(): boolean {
     return this.getCurrentUserRole().toLowerCase() === 'admin';
   }
+
+
+
+// Save
+savePriceList(data: any) {
+  return this.http.post<any>(
+    `${this.baseUrl}/SavePriceList`,
+    data
+  );
+}
+
+// Get
+getPriceLists(companyId: number) {
+  return this.http.get<any[]>(
+    `${this.baseUrl}/GetPriceListByCompanyID?companyId=${companyId}`
+  );
+}
 }

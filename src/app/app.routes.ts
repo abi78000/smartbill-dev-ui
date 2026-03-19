@@ -32,6 +32,8 @@ import { ReportsComponent } from './pages/reports/reports.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { DefaultDashboardComponent } from './pages/container/default-dashboard/default-dashboard.component';
 import { PaymentModeMasterComponent } from './pages/common-master/payment-mode-master/payment-mode-master.component';
+import { PriceListMasterComponent } from './pages/master/price-list-master/price-list-master.component';
+import { PriceListMasterItemsMappingComponent } from './pages/master/price-list-master-items-mapping/price-list-master-items-mapping.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -49,6 +51,13 @@ export const routes: Routes = [
       { path: 'master/role', component: RoleMasterComponent },
       { path: 'master/user', component: UsermasterComponent },
       { path: 'master/paymentmode', component: PaymentModeMasterComponent },
+      { path: 'master/pricelist', component: PriceListMasterComponent },
+      { path: 'master/pricelistitems', component: PriceListMasterItemsMappingComponent },
+
+      
+
+
+
       { path: '', redirectTo: 'master/company', pathMatch: 'full' },
     ],
   },

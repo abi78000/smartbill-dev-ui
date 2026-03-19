@@ -11,6 +11,21 @@ export interface Brand {
   updatedAt: string;
 }
 
+export interface PriceListMaster {
+  priceListID: number;
+  companyID: number;
+  branchID?: number;
+  priceListName: string;
+  isActive: boolean;
+
+  createdByUserID: number;
+  createdSystemName?: string;
+  createdAt?: Date;
+
+  updatedByUserID?: number;
+  updatedSystemName?: string;
+  updatedAt?: Date;
+}
 
 export interface PaymentMode {
   paymentModeID: number;
@@ -69,7 +84,7 @@ export interface Customer {
   updatedAt: string;
 }
 export interface Product {
-   sno?: number;
+  sno?: number;
   productID: number;
   productName: string;
   productCode: string;
