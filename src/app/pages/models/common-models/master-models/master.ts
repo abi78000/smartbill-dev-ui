@@ -14,17 +14,18 @@ export interface Brand {
 export interface PriceListMaster {
   priceListID: number;
   companyID: number;
-  branchID?: number;
+  branchID?: number | null;
+
   priceListName: string;
   isActive: boolean;
 
   createdByUserID: number;
-  createdSystemName?: string;
-  createdAt?: Date;
+  createdSystemName: string;
+  createdAt: Date;
 
-  updatedByUserID?: number;
-  updatedSystemName?: string;
-  updatedAt?: Date;
+  updatedByUserID?: number | null;
+  updatedSystemName?: string | null;
+  updatedAt?: Date | null;
 }
 
 export interface PaymentMode {
@@ -254,4 +255,10 @@ export interface Cess {
   updatedByUserID?: number | null;
   updatedSystemName?: string | null;
   updatedAt?: string | null; // or Date
+}
+
+
+
+export interface PriceListProduct extends Product {
+  price: number;
 }

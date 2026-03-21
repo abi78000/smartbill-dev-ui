@@ -12,14 +12,14 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./authentication.component.css'],
 })
 export class AuthenticationComponent {
-clearAllSelections() {
-throw new Error('Method not implemented.');
-}
+  clearAllSelections() {
+    throw new Error('Method not implemented.');
+  }
   roles: Role[] = [];
   users: User[] = [];
   permissions: UserPermission[] = [];
   modules: Module[] = [];
-
+  selectAll: boolean = false;
   // Track selected modules separately
   selectedModulesMap: { [moduleID: number]: boolean } = {};
   permissionNameMap: { [moduleID: number]: string } = {};
@@ -34,7 +34,11 @@ throw new Error('Method not implemented.');
     this.loadUsers();
     this.loadModules();
   }
-
+  toggleSelectAll() {
+    Object.keys(this.selectedModulesMap).forEach((key) => {
+      this.selectedModulesMap[+key] = this.selectAll;
+    });
+  }
   loadRoles() {
     this.service.getRoles().subscribe((res) => (this.roles = res));
   }
@@ -71,11 +75,9 @@ throw new Error('Method not implemented.');
         });
         this.markSelectedModules();
       },
-      (err) => console.error('Failed to load modules', err)
+      (err) => console.error('Failed to load modules', err),
     );
   }
-
-
 
   savePermission(permission: UserPermission) {
     if (!permission.permissionName || !permission.moduleID) {
@@ -93,80 +95,79 @@ throw new Error('Method not implemented.');
     });
   }
 
+  saveAllSelectedModules() {
+    if (!this.selectedUserId) {
+      alert('Please select a user first.');
+      return;
+    }
 
-saveAllSelectedModules() {
-  if (!this.selectedUserId) {
-    alert('Please select a user first.');
-    return;
+    const selectedModuleIDs = Object.keys(this.selectedModulesMap)
+      .filter((id) => this.selectedModulesMap[+id])
+      .map((id) => +id);
+
+    if (!selectedModuleIDs.length) {
+      alert('Please select at least one module.');
+      return;
+    }
+
+    const existingPermission = this.permissions.find(
+      (p) => p.userID === this.selectedUserId,
+    );
+
+    const permission: UserPermission = {
+      id: existingPermission ? existingPermission.id : 0, // important for update
+      userID: this.selectedUserId,
+      roleID: 0,
+      moduleID: selectedModuleIDs.join(','),
+      permissionName: '',
+    };
+
+    this.service.savePermission(permission).subscribe(() => {
+      if (existingPermission) {
+        alert('Modules updated successfully for this user.');
+      } else {
+        alert('Modules saved successfully for this user.');
+      }
+
+      this.loadPermissionsForUser(); // refresh checkboxes
+    });
   }
 
-  const selectedModuleIDs = Object.keys(this.selectedModulesMap)
-    .filter(id => this.selectedModulesMap[+id])
-    .map(id => +id);
-
-  if (!selectedModuleIDs.length) {
-    alert('Please select at least one module.');
-    return;
-  }
-
-  const existingPermission = this.permissions.find(p => p.userID === this.selectedUserId);
-
-  const permission: UserPermission = {
-    id: existingPermission ? existingPermission.id : 0, // important for update
-    userID: this.selectedUserId,
-    roleID: 0,
-    moduleID: selectedModuleIDs.join(','),
-    permissionName: ''
-  };
-
-  this.service.savePermission(permission).subscribe(() => {
-    if (existingPermission) {
-      alert('Modules updated successfully for this user.');
+  onUserChange() {
+    if (this.selectedUserId) {
+      this.loadPermissionsForUser(); // fetches the row for that user
     } else {
-      alert('Modules saved successfully for this user.');
+      // Clear selections
+      Object.keys(this.selectedModulesMap).forEach(
+        (k) => (this.selectedModulesMap[+k] = false),
+      );
+      this.permissions = [];
     }
-
-    this.loadPermissionsForUser(); // refresh checkboxes
-  });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-onUserChange() {
-  if (this.selectedUserId) {
-    this.loadPermissionsForUser(); // fetches the row for that user
-  } else {
-    // Clear selections
-    Object.keys(this.selectedModulesMap).forEach(k => this.selectedModulesMap[+k] = false);
-    this.permissions = [];
   }
-}
 
-private markSelectedModules() {
-  Object.keys(this.selectedModulesMap).forEach(k => this.selectedModulesMap[+k] = false);
+  private markSelectedModules() {
+    Object.keys(this.selectedModulesMap).forEach(
+      (k) => (this.selectedModulesMap[+k] = false),
+    );
 
-  this.permissions.forEach(p => {
-    if (!p.moduleID) return;
+    this.permissions.forEach((p) => {
+      if (!p.moduleID) return;
 
-    let moduleIds: number[] = [];
-    if (typeof p.moduleID === 'string') moduleIds = p.moduleID.split(',').map(id => +id);
-    else if (typeof p.moduleID === 'number') moduleIds = [p.moduleID];
-    else if (Array.isArray(p.moduleID) && Array.isArray(p.moduleID) && (p.moduleID as Array<number | string>).every(id => typeof id === 'number' || typeof id === 'string')) {
-      moduleIds = (p.moduleID as Array<number | string>).map(id => +id);
-    }
+      let moduleIds: number[] = [];
+      if (typeof p.moduleID === 'string')
+        moduleIds = p.moduleID.split(',').map((id) => +id);
+      else if (typeof p.moduleID === 'number') moduleIds = [p.moduleID];
+      else if (
+        Array.isArray(p.moduleID) &&
+        Array.isArray(p.moduleID) &&
+        (p.moduleID as Array<number | string>).every(
+          (id) => typeof id === 'number' || typeof id === 'string',
+        )
+      ) {
+        moduleIds = (p.moduleID as Array<number | string>).map((id) => +id);
+      }
 
-    moduleIds.forEach(id => this.selectedModulesMap[id] = true);
-  });
-}
-
-
+      moduleIds.forEach((id) => (this.selectedModulesMap[id] = true));
+    });
+  }
 }

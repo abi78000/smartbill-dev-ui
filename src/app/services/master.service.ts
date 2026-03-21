@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../config';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   Brand,
@@ -51,19 +51,16 @@ export class MasterService {
 
   // ================= PRICE LIST =================
 
-savePriceList(data: PriceListMaster) {
-  return this.http.post<any>(
-    `${this.baseUrl}/SavePriceList`,
-    data
-  );
-}
+  savePriceList(data: PriceListMaster) {
+    return this.http.post<any>(`${this.baseUrl}/SavePriceList`, data);
+  }
 
-addPriceListItems(priceListId: number, items: any[]) {
-  return this.http.post<any>(
-    `${this.baseUrl}/AddPriceListItems?priceListId=${priceListId}`,
-    items
-  );
-}
+  addPriceListItems(priceListId: number, items: any[]) {
+    return this.http.post<any>(
+      `${this.baseUrl}/AddPriceListItems?priceListId=${priceListId}`,
+      items,
+    );
+  }
 
   // ================= Category =================
   getCategories(): Observable<Category[]> {
@@ -179,4 +176,74 @@ addPriceListItems(priceListId: number, items: any[]) {
   isAdmin(): boolean {
     return this.getCurrentUserRole().toLowerCase() === 'admin';
   }
+
+  // ================= CURRENT USER =================
+
+  // Get Company ID from localStorage
+  getCurrentCompanyId(): number {
+    const companyId = localStorage.getItem('companyId');
+    return companyId ? Number(companyId) : 0;
+  }
+
+  // ================= PRICE LIST MASTER =================
+  getPriceLists(companyId: number, branchId?: number | null) {
+
+    let params = new HttpParams().set('companyId', companyId);
+
+    if (branchId !== null && branchId !== undefined) {
+      params = params.set('branchId', branchId);
+    }
+
+    return this.http.get<any>(
+      `${this.baseUrl}/GetPriceLists`,
+      { params }
+    );
+  }
+
+
+  // ================= PRICE LIST ITEMS =================
+  getPriceListItems(
+    companyId: number,
+    priceListId: number,
+    branchId?: number | null
+  ) {
+
+    let params = new HttpParams()
+      .set('companyId', companyId)
+      .set('priceListId', priceListId);
+
+    if (branchId !== null && branchId !== undefined) {
+      params = params.set('branchId', branchId);
+    }
+
+    return this.http.get<any>(
+      `${this.baseUrl}/GetPriceListItems`,
+      { params }
+    );
+  }
+
+
+  // ================= SINGLE ITEM PRICE =================
+  getPrice(
+    companyId: number,
+    priceListId: number,
+    productId: number,
+    branchId?: number | null
+  ) {
+
+    let params = new HttpParams()
+      .set('companyId', companyId)
+      .set('priceListId', priceListId)
+      .set('productId', productId);
+
+    if (branchId !== null && branchId !== undefined) {
+      params = params.set('branchId', branchId);
+    }
+
+    return this.http.get<any>(
+      `${this.baseUrl}/GetPriceListByItem`,
+      { params }
+    );
+  }
+
 }

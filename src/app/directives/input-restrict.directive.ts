@@ -21,6 +21,7 @@ export class InputRestrictDirective {
     const allowedKeys = [
       'Backspace',
       'Tab',
+      ' ',
       'ArrowLeft',
       'ArrowRight',
       'Delete',

@@ -41,7 +41,18 @@
           </button>
         </div>
       </div>
-
+      <div class="form-check form-switch ms-3 mt-2">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="selectAllModules"
+          [(ngModel)]="selectAll"
+          (change)="toggleSelectAll()"
+        />
+        <label class="form-check-label fw-semibold" for="selectAllModules">
+          Select All Modules
+        </label>
+      </div>
       <!-- Card Body with Module List -->
       <div class="card-body p-0">
         <ul class="list-group list-group-flush module-list">
