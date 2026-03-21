@@ -244,6 +244,32 @@ export class MasterService {
       `${this.baseUrl}/GetPriceListByItem`,
       { params }
     );
-  }
 
+    
+  }
+// ================= BRANCH COUNTER =================
+
+// SAVE (Add / Update / Delete)
+saveBranchCounter(data: any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}/BranchCounter`, data);
+}
+
+// GET ALL COUNTERS
+getBranchCounters(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/BranchCounters`);
+}
+
+// GET COUNTERS BY BRANCH
+getCountersByBranch(branchId: number): Observable<any[]> {
+  return this.http.get<any[]>(
+    `${this.baseUrl}/BranchCountersByBranch?branchId=${branchId}`
+  );
+}
+
+// GET SINGLE COUNTER
+getCounterById(counterId: number): Observable<any> {
+  return this.http.get<any>(
+    `${this.baseUrl}/BranchCounterById?counterId=${counterId}`
+  );
+}
 }

@@ -34,6 +34,7 @@ import { DefaultDashboardComponent } from './pages/container/default-dashboard/d
 import { PaymentModeMasterComponent } from './pages/common-master/payment-mode-master/payment-mode-master.component';
 import { PriceListMasterComponent } from './pages/master/price-list-master/price-list-master.component';
 import { PriceListMasterItemsMappingComponent } from './pages/master/price-list-master-items-mapping/price-list-master-items-mapping.component';
+import { BranchCounterComponent } from './pages/master/branch-counter/branch-counter.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -53,9 +54,7 @@ export const routes: Routes = [
       { path: 'master/paymentmode', component: PaymentModeMasterComponent },
       { path: 'master/pricelist', component: PriceListMasterComponent },
       { path: 'master/pricelistitems', component: PriceListMasterItemsMappingComponent },
-
-      
-
+      { path: 'master/branchcounter', component: BranchCounterComponent },
 
 
       { path: '', redirectTo: 'master/company', pathMatch: 'full' },
