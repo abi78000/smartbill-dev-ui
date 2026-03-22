@@ -40,6 +40,7 @@ import { ExpenseCategoryComponent } from './pages/expense-management/expense-cat
 import { ExpenseSubcategoryComponent } from './pages/expense-management/expense-subcategory/expense-subcategory.component';
 import { EstimationEntryComponent } from './pages/estimation/estimation-entry/estimation-entry.component';
 import { EstimationViewComponent } from './pages/estimation/estimation-view/estimation-view.component';
+import { ExpenseViewComponent } from './pages/expense-management/expense-view/expense-view.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -65,13 +66,11 @@ export const routes: Routes = [
       { path: 'expense/category', component: ExpenseCategoryComponent },
       { path: 'expense/subcategory', component: ExpenseSubcategoryComponent },
       { path: 'expense/entry', component: ExpenseEntryComponent },
+      { path: 'expense/view', component: ExpenseViewComponent },
 
 
-   
-
-    // ESTIMATION ✅
-    { path: 'estimation/entry', component: EstimationEntryComponent },
-    { path: 'estimation/view', component: EstimationViewComponent },
+      { path: 'estimation/entry', component: EstimationEntryComponent },
+      { path: 'estimation/view', component: EstimationViewComponent },
 
       { path: '', redirectTo: 'master/company', pathMatch: 'full' },
     ],
@@ -167,11 +166,5 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
     ],
-
-
-
-
   },
-
-
 ];
