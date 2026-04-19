@@ -58,18 +58,13 @@ export const routes: Routes = [
       { path: 'master/user', component: UsermasterComponent },
       { path: 'master/paymentmode', component: PaymentModeMasterComponent },
       { path: 'master/pricelist', component: PriceListMasterComponent },
-      {
-        path: 'master/pricelistitems',
-        component: PriceListMasterItemsMappingComponent,
-      },
+      { path: 'master/pricelistitems',component: PriceListMasterItemsMappingComponent,},
       { path: 'master/branchcounter', component: BranchCounterComponent },
       { path: 'expense/category', component: ExpenseCategoryComponent },
       { path: 'expense/subcategory', component: ExpenseSubcategoryComponent },
-      { path: 'expense/entry', component: ExpenseEntryComponent },
+      { path: 'expense/entry', component: ExpenseEntryComponent, data: { hideHeader: true } },
       { path: 'expense/view', component: ExpenseViewComponent },
-
-
-      { path: 'estimation/entry', component: EstimationEntryComponent },
+      { path: 'estimation/entry', component: EstimationEntryComponent,  data: { hideHeader: true },},
       { path: 'estimation/view', component: EstimationViewComponent },
 
       { path: '', redirectTo: 'master/company', pathMatch: 'full' },

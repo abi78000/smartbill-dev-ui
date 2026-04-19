@@ -32,7 +32,6 @@ declare const lucide: any;
 })
 export class ReportsComponent implements AfterViewInit {
 
-  // ✅ ADD 'outstanding'
   activeTab:
     | 'dashboard'
     | 'terminal'

@@ -26,7 +26,7 @@ export class SalesService {
   getSalesProducts(
     companyId?: number,
     branchId?: number,
-    businessTypeId?: number
+    businessTypeId?: number,
   ): Observable<ApiResponse<ProductStockPrice[]>> {
     let params = new HttpParams();
 
@@ -37,32 +37,35 @@ export class SalesService {
 
     return this.http.get<ApiResponse<ProductStockPrice[]>>(
       `${this.baseUrl}/SalesProducts`,
-      { params }
+      { params },
     );
   }
 
   getAllBusinessTypes() {
     return this.http.get<ApiResponse<BusinessType[]>>(
-      `${this.baseUrl}/GetAllBusinessTypes`
+      `${this.baseUrl}/GetAllBusinessTypes`,
     );
   }
 
   getAllGstTypes() {
     return this.http.get<ApiResponse<GstTransactionType[]>>(
-      `${this.baseUrl}/GetAllGstType`
+      `${this.baseUrl}/GetAllGstType`,
     );
   }
 
   saveSalesEntry(
-    entries: any[]
+    entries: any[],
   ): Observable<ApiResponse<SaveSalesEntryResponse>> {
     return this.http.post<ApiResponse<SaveSalesEntryResponse>>(
       `${this.baseUrl}/salesentry`,
-      entries
+      entries,
     );
   }
 
-  getNextInvoiceNumber(companyId: number, branchId?: string): Observable<string> {
+  getNextInvoiceNumber(
+    companyId: number,
+    branchId?: string,
+  ): Observable<string> {
     let params = new HttpParams().set('companyId', companyId);
 
     if (branchId && branchId.trim() !== '') {
@@ -75,20 +78,17 @@ export class SalesService {
     });
   }
 
+  getSalesEntries(
+    companyId?: number | null,
+    branchId?: number | null,
+    invoiceNumber?: string | null,
+  ): Observable<any[]> {
+    let params = new HttpParams();
 
-getSalesEntries(companyId?: number | null, branchId?: number | null, invoiceNumber?: string | null): Observable<any[]> {
-  let params = new HttpParams();
+    if (companyId) params = params.set('companyId', companyId);
+    if (branchId) params = params.set('branchId', branchId);
+    if (invoiceNumber) params = params.set('invoiceNumber', invoiceNumber);
 
-  if (companyId) params = params.set('companyId', companyId);
-  if (branchId) params = params.set('branchId', branchId);
-  if (invoiceNumber) params = params.set('invoiceNumber', invoiceNumber);
-
-  return this.http.get<any[]>(`${this.baseUrl}/GetSalesEntries`, { params });
-}
-
-
-
-
-
-
+    return this.http.get<any[]>(`${this.baseUrl}/GetSalesEntries`, { params });
+  }
 }
